@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registro de Profesor</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div class="container" style="max-width: 420px; margin-top: 60px;">
+    <h2>Registro de Profesor</h2>
+    <div th:if="${error}" class="alert-err" th:text="${error}"></div>
+    <form th:action="@{/registro}" method="post">
+        <label>Nombre completo</label>
+        <input type="text" name="nombreCompleto" required>
+        <label>Correo electrónico</label>
+        <input type="email" name="correo" required>
+        <label>Contraseña (mín. 6 caracteres)</label>
+        <input type="password" name="password" required minlength="6">
+        <button type="submit" class="btn" style="width:100%;">Crear cuenta</button>
+    </form>
+    <p style="margin-top:14px;"><a th:href="@{/login}">Volver al inicio de sesión</a></p>
+</div>
+</body>
+</html>

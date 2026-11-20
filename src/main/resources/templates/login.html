@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Iniciar Sesión - Pase de Lista</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div class="container" style="max-width: 420px; margin-top: 60px;">
+    <h2>Sistema de Pase de Lista</h2>
+    <p style="color:#555; font-size:14px;">Ingeniería en Computación · UNAM FES Aragón</p>
+    <div th:if="${param.error}" class="alert-err">Correo o contraseña incorrectos.</div>
+    <div th:if="${param.registrado}" class="alert-ok">Registro exitoso. Ahora inicia sesión.</div>
+    <div th:if="${param.logout}" class="alert-ok">Sesión cerrada correctamente.</div>
+    <form th:action="@{/login}" method="post">
+        <label>Correo electrónico</label>
+        <input type="email" name="correo" required>
+        <label>Contraseña</label>
+        <input type="password" name="password" required>
+        <button type="submit" class="btn" style="width:100%;">Ingresar</button>
+    </form>
+    <p style="margin-top:14px;">¿No tienes cuenta? <a th:href="@{/registro}">Regístrate aquí</a></p>
+</div>
+</body>
+</html>
