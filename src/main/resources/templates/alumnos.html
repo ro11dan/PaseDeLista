@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Alumnos</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div class="container">
+    <a th:href="@{/materias}" class="btn btn-sec">← Volver a Materias</a>
+    <h2 style="margin-top:14px;" th:text="'Alumnos - ' + ${materia.nombreMateria} + ' (' + ${materia.grupo} + ')'"></h2>
+
+    <div th:if="${mensaje}" class="alert-ok" th:text="${mensaje}"></div>
+    <div th:if="${error}" class="alert-err" th:text="${error}"></div>
+
+    <h3>Inscribir alumno manualmente</h3>
+    <form th:action="@{/materias/{id}/alumnos/agregar(id=${materia.idMateria})}" method="post">
+        <input type="text" name="numeroCuenta" placeholder="Número de cuenta (9 dígitos)" pattern="\d{9}" required>
+        <input type="text" name="nombreCompleto" placeholder="Nombre completo" required>
+        <input type="email" name="correoElectronico" placeholder="Correo electrónico" required>
+        <button type="submit" class="btn">Inscribir</button>
+    </form>
+
+    <h3 style="margin-top:20px;">Cargar desde CSV (numero_cuenta,nombre_completo,correo)</h3>
+    <form th:action="@{/materias/{id}/alumnos/cargar-csv(id=${materia.idMateria})}" method="post" enctype="multipart/form-data">
+        <input type="file" name="archivo" accept=".csv" required>
+        <button type="submit" class="btn btn-sec">Subir CSV</button>
+    </form>
+
+    <table>
+        <thead><tr><th>No. Cuenta</th><th>Nombre</th><th>Correo</th><th>Acciones</th></tr></thead>
+        <tbody>
+        <tr th:each="ins : ${inscripciones}">
+            <td th:text="${ins.alumno.numeroCuenta}"></td>
+            <td th:text="${ins.alumno.nombreCompleto}"></td>
+            <td th:text="${ins.alumno.correoElectronico}"></td>
+            <td>
+                <a th:href="@{/materias/{m}/alumnos/{a}/editar(m=${materia.idMateria},a=${ins.alumno.idAlumno})}" class="btn btn-sec">Editar</a>
+                <form th:action="@{/materias/{m}/alumnos/{i}/quitar(m=${materia.idMateria},i=${ins.idInscripcion})}" method="post" style="display:inline;">
+                    <button type="submit" class="btn btn-danger">Quitar</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

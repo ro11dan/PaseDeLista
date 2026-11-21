@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Alumno</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div class="container" style="max-width: 500px;">
+    <h2>Editar Alumno</h2>
+    <p><strong>No. Cuenta:</strong> <span th:text="${alumno.numeroCuenta}"></span></p>
+    <form th:action="@{/materias/{m}/alumnos/{a}/editar(m=${materia.idMateria},a=${alumno.idAlumno})}" method="post">
+        <label>Nombre completo</label>
+        <input type="text" name="nombreCompleto" th:value="${alumno.nombreCompleto}" required>
+        <label>Correo electrónico</label>
+        <input type="email" name="correoElectronico" th:value="${alumno.correoElectronico}" required>
+        <button type="submit" class="btn">Guardar cambios</button>
+        <a th:href="@{/materias/{m}/alumnos(m=${materia.idMateria})}" class="btn btn-sec">Cancelar</a>
+    </form>
+</div>
+</body>
+</html>
