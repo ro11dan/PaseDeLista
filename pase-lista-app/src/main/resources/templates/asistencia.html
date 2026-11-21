@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Pase de Lista</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div class="container">
+    <a th:href="@{/materias}" class="btn btn-sec">← Volver a Materias</a>
+    <h2 style="margin-top:14px;" th:text="'Pase de Lista - ' + ${materia.nombreMateria} + ' (' + ${fechaHoy} + ')'"></h2>
+    <div class="badge-info">
+        <strong>Horario configurado:</strong> <span th:text="${materia.resumenHorario}"></span> |
+        <strong>Hora del servidor:</strong> <span th:text="${horaActual}"></span>
+    </div>
+
+    <div th:if="${mensaje}" class="alert-ok" th:text="${mensaje}"></div>
+    <div th:if="${error}" class="alert-err" th:text="${error}"></div>
+
+    <div th:if="${!habilitado}" class="alert-err">
+        El pase de lista está deshabilitado. Solo se permite en los días y horarios configurados dentro del periodo escolar.
+    </div>
+
+    <form th:if="${habilitado}" th:action="@{/materias/{id}/asistencia/guardar(id=${materia.idMateria})}" method="post">
+        <p th:if="${#lists.isEmpty(inscripciones)}" style="color:#666;">No hay alumnos inscritos en esta materia.</p>
+        <table th:if="${!#lists.isEmpty(inscripciones)}">
+            <thead><tr><th>No. Cuenta</th><th>Alumno</th><th>Estado</th></tr></thead>
+            <tbody>
+            <tr th:each="ins : ${inscripciones}">
+                <td th:text="${ins.alumno.numeroCuenta}"></td>
+                <td th:text="${ins.alumno.nombreCompleto}"></td>
+                <td>
+                    <select th:name="'estado_' + ${ins.idInscripcion}">
+                        <option value="Presente" th:selected="${estadosHoy[ins.idInscripcion] == 'Presente'}">Presente</option>
+                        <option value="Ausente" th:selected="${estadosHoy[ins.idInscripcion] == 'Ausente'}">Ausente</option>
+                    </select>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <button th:if="${!#lists.isEmpty(inscripciones)}" type="submit" class="btn" style="margin-top:16px;">Guardar / Actualizar Asistencia</button>
+    </form>
+</div>
+</body>
+</html>

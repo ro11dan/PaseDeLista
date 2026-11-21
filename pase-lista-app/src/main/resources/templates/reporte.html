@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Reporte de Asistencias</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div class="container">
+    <a th:href="@{/materias}" class="btn btn-sec">← Volver a Materias</a>
+    <h2 style="margin-top:14px;" th:text="'Reporte de Asistencias - ' + ${materia.nombreMateria} + ' (' + ${materia.grupo} + ')'"></h2>
+    <table>
+        <thead>
+        <tr><th>No. Cuenta</th><th>Nombre</th><th>Asistencias</th><th>Faltas</th><th>Total Sesiones</th><th>% Asistencia</th></tr>
+        </thead>
+        <tbody>
+        <tr th:each="r : ${reporte}">
+            <td th:text="${r.numeroCuenta}"></td>
+            <td th:text="${r.nombreCompleto}"></td>
+            <td th:text="${r.presentes}"></td>
+            <td th:text="${r.faltas}"></td>
+            <td th:text="${r.total}"></td>
+            <td><strong th:text="${r.porcentaje + '%'}"></strong></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
