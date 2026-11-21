@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Configurar Materia</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div class="container" style="max-width: 600px;">
+    <h2>Configurar Materia y Horario</h2>
+    <div th:if="${error}" class="alert-err" th:text="${error}"></div>
+    <form th:action="@{/materias/guardar}" method="post">
+        <input type="hidden" name="idMateria" th:value="${materia.idMateria}">
+        <label>Nombre de la materia</label>
+        <input type="text" name="nombreMateria" th:value="${materia.nombreMateria}" required>
+        <label>Clave</label>
+        <input type="text" name="claveMateria" th:value="${materia.claveMateria}" required>
+        <label>Grupo</label>
+        <input type="text" name="grupo" th:value="${materia.grupo}" required>
+        <label>Fecha de inicio del periodo</label>
+        <input type="date" name="fechaInicio" th:value="${materia.fechaInicio}" required>
+        <label>Fecha de fin del periodo</label>
+        <input type="date" name="fechaFin" th:value="${materia.fechaFin}" required>
+
+        <label>Días de clase</label>
+        <div class="dias-grid">
+            <label><input type="checkbox" name="dias" value="1" th:checked="${#lists.contains(diasSeleccionados, 1)}"> Lunes</label>
+            <label><input type="checkbox" name="dias" value="2" th:checked="${#lists.contains(diasSeleccionados, 2)}"> Martes</label>
+            <label><input type="checkbox" name="dias" value="3" th:checked="${#lists.contains(diasSeleccionados, 3)}"> Miércoles</label>
+            <label><input type="checkbox" name="dias" value="4" th:checked="${#lists.contains(diasSeleccionados, 4)}"> Jueves</label>
+            <label><input type="checkbox" name="dias" value="5" th:checked="${#lists.contains(diasSeleccionados, 5)}"> Viernes</label>
+            <label><input type="checkbox" name="dias" value="6" th:checked="${#lists.contains(diasSeleccionados, 6)}"> Sábado</label>
+        </div>
+
+        <label>Hora de inicio</label>
+        <input type="time" name="horaInicio" th:value="${horaInicio}" required>
+        <label>Hora de fin</label>
+        <input type="time" name="horaFin" th:value="${horaFin}" required>
+
+        <button type="submit" class="btn">Guardar Materia</button>
+        <a th:href="@{/materias}" class="btn btn-sec">Cancelar</a>
+    </form>
+</div>
+</body>
+</html>

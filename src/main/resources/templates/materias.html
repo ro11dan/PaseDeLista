@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Mis Materias</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<header>
+    <div><strong>FES Aragón - Pase de Lista</strong> | <span th:text="${profesor.nombreCompleto}"></span></div>
+    <form th:action="@{/logout}" method="post" style="margin:0;">
+        <button type="submit" class="btn btn-sec">Cerrar sesión</button>
+    </form>
+</header>
+<div class="container">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h2>Mis Materias</h2>
+        <a th:href="@{/materias/nueva}" class="btn">+ Nueva Materia</a>
+    </div>
+    <p th:if="${#lists.isEmpty(materias)}" style="color:#666;">Aún no tienes materias registradas. Crea una para comenzar.</p>
+    <table th:if="${!#lists.isEmpty(materias)}">
+        <thead>
+        <tr>
+            <th>Clave</th><th>Materia</th><th>Grupo</th><th>Periodo</th><th>Horario</th><th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="m : ${materias}">
+            <td th:text="${m.claveMateria}"></td>
+            <td th:text="${m.nombreMateria}"></td>
+            <td th:text="${m.grupo}"></td>
+            <td th:text="${m.fechaInicio + ' a ' + m.fechaFin}"></td>
+            <td th:text="${m.resumenHorario}"></td>
+            <td>
+                <a th:href="@{/materias/{id}/alumnos(id=${m.idMateria})}" class="btn">Alumnos</a>
+                <a th:href="@{/materias/{id}/asistencia(id=${m.idMateria})}" class="btn">Pasar Lista</a>
+                <a th:href="@{/materias/{id}/reporte(id=${m.idMateria})}" class="btn btn-sec">Reporte</a>
+                <a th:href="@{/materias/{id}/editar(id=${m.idMateria})}" class="btn btn-sec">Editar</a>
+                <form th:action="@{/materias/{id}/eliminar(id=${m.idMateria})}" method="post" style="display:inline;">
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('¿Eliminar materia y todos sus registros?')">X</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
